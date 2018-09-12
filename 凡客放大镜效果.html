@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>凡客放大镜效果</title>
+    <style type="text/css">
+        #left{
+            width: 400px;
+            height: 400px;
+            position: relative;
+            float: left;
+            border: 3px solid blue;
+            margin: 20px;
+            background: url('./images/400.jpg') no-repeat;
+            cursor: crosshair;
+        }
+        #box{
+            width: 220px;
+            height: 200px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background-color: white;
+            opacity: 0.8;
+            display: none;
+        }
+        #right{
+            width: 440px;
+            height: 400px;
+            position: relative;
+            float: left;
+            overflow: hidden;
+            display: none;
+        }
+        #pic{
+        position: absolute;
+        left: 0;
+        top: 0;
+        }
+        #cover{
+        width: 400px;
+        height: 400px;
+        position: absolute;
+        left:0;
+        top: 0;
+        opacity: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="left">
+    <div id="box">
+    </div>
+    <div id="cover">
+    </div>
+</div>
+<div id="right">
+    <img src="./images/800.jpg" alt="" id="pic">
+</div>
+<script>
+    var left = document.getElementById("left");
+    var box  = document.getElementById("box");
+    var right = document.getElementById("right");
+    var pic = document.getElementById("pic");
+    var cover = document.getElementById("cover");
+    // 给左侧框加鼠标移动事件
+    cover.onmousemove = function (e) {
+        var ev = window.event || e;
+        var mouse_left = ev.offsetX || ev.layerX;
+        var mouse_top = ev.offsetY || ev.layerY;
+        document.title=mouse_left + '|'+ mouse_top;
+        // 计算色块的位置
+        var box_left = mouse_left - 110;
+        var box_top = mouse_top - 100;
+        if(box_left < 0){
+            box_left = 0;
+
+        }else if(box_left > 180){
+            box_left = 180;
+
+        }
+        if(box_top < 0){
+            box_top = 0;
+        }else if(box_top > 200){
+            box_top = 200;
+        }
+        // 让色块移动(改变色块的left和top)
+        box.style.left = box_left + 'px';
+        box.style.top = box_top + 'px';
+        // 计算右边大图的位置
+        var pic_left = box_left * -2;
+        var pic_top = box_top * -2;
+        // 让大图移动（改变右边大图的left和top值）
+        pic.style.left = pic_left + 'px';
+        pic.style.top = pic_top + 'px';
+        // 给左边框加鼠标移入事件
+        cover.onmouseover = function () {
+            box.style.display = "block";
+            right.style.display = "block";
+        };
+        // 给左边框加鼠标移出事件
+        cover.onmouseout = function () {
+            box.style.display = "none";
+            right.style.display = "none";
+        }
+    }
+</script>
+</body>
+</html>
